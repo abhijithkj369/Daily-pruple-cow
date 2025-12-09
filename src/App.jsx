@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
+import { Analytics } from '@vercel/analytics/react';
 import { useDailyChallenge } from './hooks/useDailyChallenge';
+import ViewCounter from './components/ViewCounter';
 
 function App() {
   const { challenge, isCompleted, markAsFound } = useDailyChallenge();
@@ -59,6 +61,8 @@ function App() {
           )}
         </div>
       </div>
+      <ViewCounter />
+      <Analytics />
     </div>
   );
 }
