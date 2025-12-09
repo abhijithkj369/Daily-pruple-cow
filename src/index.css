@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Outfit:wght@400;700&display=swap');
+
+:root {
+  --primary-font: 'Outfit', sans-serif;
+  --display-font: 'Chewy', cursive;
+  --bg-gradient: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--primary-font);
+  background: var(--bg-gradient);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  text-align: center;
+}
+
+/* App Container */
+.app-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Typography */
+.title {
+  font-family: var(--display-font);
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.challenge-container {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 30px;
+  color: #4a00e0;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-text {
+  font-family: var(--display-font);
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+/* Button */
+.found-btn {
+  background: white;
+  color: #8e2de2;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.5rem;
+  font-family: var(--display-font);
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.found-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.found-btn:active {
+  transform: scale(0.95);
+}
+
+/* Success Message */
+.success-message {
+  font-size: 1.5rem;
+  font-weight: bold;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
