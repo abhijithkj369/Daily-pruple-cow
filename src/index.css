@@ -3,10 +3,40 @@
 :root {
   --primary-font: 'Outfit', sans-serif;
   --display-font: 'Chewy', cursive;
+
+  /* Light Theme Colors */
   --bg-gradient: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --text-color: white;
+  --card-text-color: white;
+  --challenge-bg: rgba(255, 255, 255, 0.9);
+  --challenge-text: #4a00e0;
+  --btn-bg: white;
+  --btn-text: #8e2de2;
+  --modal-bg: white;
+  --modal-text: #333;
+  --entry-bg: #f9f9f9;
+  --entry-border: #8e2de2;
+}
+
+[data-theme='dark'] {
+  /* Dark Theme Colors */
+  --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  --glass-bg: rgba(0, 0, 0, 0.3);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  --text-color: #e0e0e0;
+  --card-text-color: #e0e0e0;
+  --challenge-bg: rgba(255, 255, 255, 0.1);
+  --challenge-text: #bb86fc;
+  --btn-bg: #bb86fc;
+  --btn-text: #121212;
+  --modal-bg: #1e1e1e;
+  --modal-text: #e0e0e0;
+  --entry-bg: #2c2c2c;
+  --entry-border: #bb86fc;
 }
 
 * {
@@ -18,12 +48,13 @@
 body {
   font-family: var(--primary-font);
   background: var(--bg-gradient);
-  color: white;
+  color: var(--text-color);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
+  transition: background 0.5s ease;
 }
 
 #root {
@@ -52,8 +83,8 @@ body {
   width: 100%;
   max-width: 500px;
   text-align: center;
-  color: white;
-  transition: transform 0.3s ease;
+  color: var(--card-text-color);
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .glass-card:hover {
@@ -75,12 +106,13 @@ body {
 }
 
 .challenge-container {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--challenge-bg);
   border-radius: 15px;
   padding: 30px;
   margin-bottom: 30px;
-  color: #4a00e0;
+  color: var(--challenge-text);
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .challenge-text {
@@ -91,8 +123,8 @@ body {
 
 /* Button */
 .found-btn {
-  background: white;
-  color: #8e2de2;
+  background: var(--btn-bg);
+  color: var(--btn-text);
   border: none;
   padding: 15px 40px;
   font-size: 1.5rem;
@@ -141,7 +173,7 @@ body {
   padding: 8px 15px;
   border-radius: 20px;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-color);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -157,4 +189,400 @@ body {
 
 .eye-icon {
   font-size: 1.1rem;
+}
+
+/* Streak Counter */
+.streak-counter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.fire-icon {
+  font-size: 1.4rem;
+}
+
+/* Icon Button */
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 5px;
+  border-radius: 50%;
+  color: var(--text-color);
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  transition: transform 0.2s, background 0.2s;
+  z-index: 100;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: var(--modal-bg);
+  color: var(--modal-text);
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--entry-border);
+  padding-bottom: 10px;
+}
+
+.modal-header h2 {
+  font-family: var(--display-font);
+  font-size: 2rem;
+  color: var(--challenge-text);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #999;
+}
+
+.close-btn:hover {
+  color: var(--modal-text);
+}
+
+.journal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.journal-entry {
+  background: var(--entry-bg);
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 5px solid var(--entry-border);
+}
+
+.entry-date {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.entry-challenge {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--challenge-text);
+}
+
+.entry-note {
+  font-style: italic;
+  color: var(--modal-text);
+  opacity: 0.8;
+}
+
+.empty-journal {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Note Input */
+.note-input-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(142, 45, 226, 0.3);
+  font-family: var(--primary-font);
+  font-size: 1rem;
+  background: var(--modal-bg);
+  color: var(--modal-text);
+}
+
+.note-input:focus {
+  outline: none;
+  border-color: var(--entry-border);
+}
+
+.save-note-btn {
+  background: var(--challenge-text);
+  color: var(--btn-bg);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.save-note-btn:hover {
+  opacity: 0.9;
+}
+
+/* Share Button */
+.share-btn {
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-family: var(--primary-font);
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.share-btn:hover {
+  transform: scale(1.05);
+  background: #20bd5a;
+}
+
+/* Streak Counter */
+.streak-counter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.fire-icon {
+  font-size: 1.4rem;
+}
+
+/* Icon Button */
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: white;
+  color: #333;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.modal-header h2 {
+  font-family: var(--display-font);
+  font-size: 2rem;
+  color: #4a00e0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #999;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.journal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.journal-entry {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 5px solid #8e2de2;
+}
+
+.entry-date {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.entry-challenge {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #4a00e0;
+}
+
+.entry-note {
+  font-style: italic;
+  color: #555;
+}
+
+.empty-journal {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Note Input */
+.note-input-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(142, 45, 226, 0.3);
+  font-family: var(--primary-font);
+  font-size: 1rem;
+}
+
+.note-input:focus {
+  outline: none;
+  border-color: #8e2de2;
+}
+
+.save-note-btn {
+  background: #4a00e0;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.save-note-btn:hover {
+  background: #3a00b0;
+}
+
+/* Share Button */
+.share-btn {
+  background: #25D366;
+  /* WhatsApp green-ish, or just a nice green */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-family: var(--primary-font);
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.share-btn:hover {
+  transform: scale(1.05);
+  background: #20bd5a;
 }
