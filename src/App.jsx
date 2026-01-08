@@ -10,16 +10,41 @@ import JournalModal from './components/JournalModal';
 import NoteInput from './components/NoteInput';
 import ShareButton from './components/ShareButton';
 import ThemeToggle from './components/ThemeToggle';
+import CountdownTimer from './components/CountdownTimer';
+import BadgesDisplay from './components/BadgesDisplay';
 
 function App() {
-  const { challenge, isCompleted, markAsFound, streak } = useDailyChallenge();
+  const { challenge, isCompleted, markAsFound, streak, totalFound } = useDailyChallenge();
   const { entries, addEntry } = useJournal();
   const [isJournalOpen, setIsJournalOpen] = useState(false);
   const [showNoteInput, setShowNoteInput] = useState(false);
 
+  const playSuccessSound = () => {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+    osc.frequency.exponentialRampToValueAtTime(1046.5, ctx.currentTime + 0.1); // C6
+
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
+  };
+
   const handleFoundIt = () => {
     markAsFound();
     triggerConfetti();
+    playSuccessSound();
     setShowNoteInput(true);
   };
 
@@ -88,6 +113,8 @@ function App() {
           )}
         </div>
       </div>
+      <BadgesDisplay streak={streak} totalFound={totalFound} />
+      <CountdownTimer />
       <ViewCounter />
       <Analytics />
       <JournalModal isOpen={isJournalOpen} onClose={() => setIsJournalOpen(false)} entries={entries} />

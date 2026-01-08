@@ -17,7 +17,8 @@ export function useDailyChallenge() {
             challengeIndex: 0,
             completed: false,
             streak: 0,
-            lastCompletedDate: null
+            lastCompletedDate: null,
+            totalFound: 0
         };
 
         if (storedData) {
@@ -56,7 +57,8 @@ export function useDailyChallenge() {
                     challengeIndex: newIndex,
                     completed: false,
                     streak: currentStreak,
-                    lastCompletedDate: parsed.lastCompletedDate
+                    lastCompletedDate: parsed.lastCompletedDate,
+                    totalFound: parsed.totalFound || 0
                 };
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             }
@@ -68,7 +70,8 @@ export function useDailyChallenge() {
                 challengeIndex: newIndex,
                 completed: false,
                 streak: 0,
-                lastCompletedDate: null
+                lastCompletedDate: null,
+                totalFound: 0
             };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
@@ -94,7 +97,8 @@ export function useDailyChallenge() {
                 ...parsed,
                 completed: true,
                 streak: newStreak,
-                lastCompletedDate: today
+                lastCompletedDate: today,
+                totalFound: (parsed.totalFound || 0) + 1
             };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
             setIsCompleted(true);
@@ -102,5 +106,5 @@ export function useDailyChallenge() {
         }
     };
 
-    return { challenge, isCompleted, markAsFound, streak };
+    return { challenge, isCompleted, markAsFound, streak, totalFound: (JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}').totalFound || 0) };
 }
