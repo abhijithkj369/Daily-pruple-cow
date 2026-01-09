@@ -84,9 +84,9 @@ function App() {
     <div className="app-container">
       <ThemeToggle />
       <div className="glass-card">
-        <div className="header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '1rem' }}>
-          <h1 className="title" style={{ margin: 0 }}>Daily Purple Cow</h1>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div className="header-row">
+          <h1 className="title">Daily Purple Cow</h1>
+          <div className="header-controls">
             <button className="icon-btn" onClick={() => setIsJournalOpen(true)} title="History">📔</button>
             <StreakCounter streak={streak} />
           </div>
